@@ -1,3 +1,7 @@
+//Name : Binil george
+//Project : Lexical Analyzer
+//Date :1-3-2026
+
 #include "header.h"
 
 char buffer[5000];
@@ -36,4 +40,5 @@ int main(int argc, char* argv[])
     lexi();
 
     return 0;
+
 }
