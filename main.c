@@ -1,7 +1,18 @@
-//Name : Binil george
-//Project : Lexical Analyzer
-//Date :1-3-2026
+//Binil George
+//2-3-2026
+//Project: Lexical Analyzer
+/*
 
+Itcan identify
+    * Keywords and Identifiers
+    * Integer constants (decimal, octal, hexadecimal, binary)
+    * Float and Double constants
+    * String literals and Character constants
+    * Operators and Symbols
+    * Bracket mismatches
+    * Unterminated comments and invalid numeric formats
+
+*/
 #include "header.h"
 
 char buffer[5000];
@@ -40,5 +51,4 @@ int main(int argc, char* argv[])
     lexi();
 
     return 0;
-
 }

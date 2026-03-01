@@ -24,11 +24,12 @@ void handle_string(int* i, int line, int col)
         word[k++] = buffer[*i];
         word[k] = '\0';
 
-        printf("%-20s: %s\n", "String Literal", word);
+        //printf("%-20s: %s\n", "String Literal", word);
+        printf(MAGENTA "%-20s" RESET ": %s\n", "String Literal", word);
     }
     else
     {
-        printf("%s:%d:%d: error: missing terminating '\"' character\n", file, line, col);
+        printf(RED"\n%s:%d:%d: error: missing terminating '\"' character\n" RESET, file, line, col);
         exit(1);
     }
 }
@@ -54,11 +55,13 @@ void key(int line, int col, char* word)
     {
         if(strcmp(word, keywords[i]) == 0) //if word matches with any keyword
         {
-            printf("%-20s: %s\n", "Keyword", word);
+            //printf("%-20s: %s\n", "Keyword", word);
+            printf(BLUE "%-20s" RESET ": %s\n", "Keyword", word);
             return;
         }
     }
-    printf("%-20s: %s\n", "Identifier", word);  //if word doesnt match with keyword it is an identifier
+    //printf("%-20s: %s\n", "Identifier", word);  
+    printf(CYAN "%-20s" RESET ": %s\n", "Identifier", word); //if word doesnt match with keyword it is an identifier
 }
 
 void extract_number(char *word, int *i)
@@ -84,7 +87,7 @@ int isnum(int line, int col, char *word)
     {
         if(word[2] == '\0')
         {
-            printf("%s:%d:%d: error: invalid hexadecimal constant\n", file, line, col);
+            printf(RED"\n%s:%d:%d: error: invalid hexadecimal constant\n"RESET, file, line, col);
             exit(1);
         }
 
@@ -92,12 +95,13 @@ int isnum(int line, int col, char *word)
         {
             if(!isxdigit(word[i]))
             {
-                printf("%s:%d:%d: error: invalid digit '%c' in hexadecimal constant\n", file, line, col+i, word[i]);
+                printf(RED"\n%s:%d:%d: error: invalid digit '%c' in hexadecimal constant\n"RESET, file, line, col+i, word[i]);
                 exit(1);
             }
         }
 
-        printf("%-20s: %s\n", "Hex Constant", word);
+        //printf("%-20s: %s\n", "Hex Constant", word);
+        printf(BRIGHT_YELLOW "%-20s" RESET": %s \n", "Hex Constant", word);
         return 1;
     }
 
@@ -106,7 +110,7 @@ int isnum(int line, int col, char *word)
     {
         if(word[2] == '\0')
         {
-            printf("%s:%d:%d: error: invalid binary constant\n",file, line, col);
+            printf(RED"\n%s:%d:%d: error: invalid binary constant\n"RESET,file, line, col);
             exit(1);
         }
 
@@ -114,7 +118,7 @@ int isnum(int line, int col, char *word)
         {
             if(word[i] != '0' && word[i] != '1')
             {
-                printf("%s:%d:%d: error: invalid digit '%c' in binary constant\n",file, line, col+i, word[i]);
+                printf(RED"\n%s:%d:%d: error: invalid digit '%c' in binary constant\n"RESET,file, line, col+i, word[i]);
                 exit(1);
             }
         }
@@ -130,12 +134,13 @@ int isnum(int line, int col, char *word)
         {
             if(word[i] < '0' || word[i] > '7')
             {
-                printf("%s:%d:%d: error: invalid digit '%c' in octal constant\n",file, line, col+i, word[i]);
+                printf(RED"\n%s:%d:%d: error: invalid digit '%c' in octal constant\n"RESET,file, line, col+i, word[i]);
                 exit(1);
             }
         }
 
-        printf("%-20s: %s\n", "Octal Constant", word);
+        //printf("%-20s: %s\n", "Octal Constant", word);
+        printf(LIGHT_CYAN "%-20s"RESET": %s \n", "Octal Constant", word);
         return 1;
     }
 
@@ -144,12 +149,13 @@ int isnum(int line, int col, char *word)
     {
         if(!isdigit(word[i]))
         {
-            printf("%s:%d:%d: error: invalid integer constant '%s'\n", file, line, col, word);
+            printf(RED"\n%s:%d:%d: error: invalid integer constant '%s'\n"RESET, file, line, col, word);
             exit(1);
         }
     }
 
-    printf("%-20s: %s\n", "Integer Constant", word);
+    //printf("%-20s: %s\n", "Integer Constant", word);
+    printf(YELLOW "%-20s" RESET ": %s\n", "Integer Constant", word);
     return 1;
 }
 
@@ -160,7 +166,8 @@ int isfloat_or_double(int line, int col, char *word)
 
     if(word[0] == '.' && word[1] == '\0')
     {
-        printf("%s:%d:%d: error: invalid float constant '%s'\n",file, line, col, word);
+        //printf("%s:%d:%d: error: invalid float constant '%s'\n",file, line, col, word);
+        printf(RED "\n%s:%d:%d: error: invalid float constant '%s'\n" RESET, file, line, col, word);
         exit(1);
     }
 
@@ -171,7 +178,7 @@ int isfloat_or_double(int line, int col, char *word)
             dot_count++;
             if(dot_count > 1)
             {
-                printf("%s:%d:%d: error: invalid float constant '%s'\n",file, line, col, word);
+                printf(RED"\n%s:%d:%d: error: invalid float constant '%s'\n"RESET,file, line, col, word);
                 exit(1);
             }
         }
@@ -183,12 +190,13 @@ int isfloat_or_double(int line, int col, char *word)
         }
         else if((word[i] == 'f' || word[i] == 'F') && word[i+1] == '\0')
         {
-            printf("%-20s: %s\n", "Float Constant", word);
+            //printf("%-20s: %s\n", "Float Constant", word);
+            printf(GREEN "%-20s" RESET ": %s\n", "Float Constant", word);
             return 1;
         }
         else
         {
-            printf("%s:%d:%d: error: invalid suffix '%c' on floating constant\n",file, line, col+i, word[i]);
+            printf(RED"\n%s:%d:%d: error: invalid suffix '%c' on floating constant\n"RESET,file, line, col+i, word[i]);
             exit(1);
         }
 
@@ -197,10 +205,11 @@ int isfloat_or_double(int line, int col, char *word)
 
     if(dot_count == 1)
     {
-        printf("%-20s: %s\n", "Double Constant", word);
+        // printf("%-20s: %s\n", "Double Constant", word);
+        printf(GREEN "%-20s" RESET ": %s\n", "Double Constant", word);
         return 1;
     }
 
-    printf("%s:%d:%d: error: invalid float constant '%s'\n", file, line, col, word);
+    printf(RED"\n%s:%d:%d: error: invalid float constant '%s'\n"RESET, file, line, col, word);
     exit(1);
 }

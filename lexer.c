@@ -73,7 +73,7 @@ void lexi()
 
             if(buffer[i] == '\0')  //if multilinr =e comment is not closed using */
             {
-                printf("%s:%d:%d: error: unterminated comment\n", file, line, col);
+                printf(RED"\n%s:%d:%d: error: unterminated comment\n"RESET, file, line, col);
                 return;
             }
 
@@ -100,7 +100,7 @@ void lexi()
 
             if(buffer[i+2] != '\'')
             {
-                printf("%s:%d:%d: error: invalid character constant\n", file, line, col);
+                printf(RED "\n%s:%d:%d: error: invalid character constant\n" RESET, file, line, col);
                 exit(1);
             }
 
@@ -147,11 +147,12 @@ void lexi()
 
             if(round < 0 || square < 0 || curly < 0)
             {
-                printf("%s:%d:%d: error: unmatched closing bracket '%c'\n", file, line, col, ch);
+                printf(RED "\n%s:%d:%d: error: unmatched closing bracket '%c'\n" RESET, file, line, col, ch);
                 exit(1);
             }
 
-            printf("%-20s: %c\n", "Symbol",  ch);
+            //printf("%-20s: %c\n", "Symbol",  ch);
+            printf(LIGHT_YELLOW "%-20s"RESET": %c\n", "Symbol", ch);
             continue;
         }
 
@@ -160,17 +161,20 @@ void lexi()
         {
             if(buffer[i+1] == ch)   // detect &&, ||, ++, --, **, <<, >>
             {
-                printf("%-20s: %c%c\n","Operator", ch, buffer[i+1]);
+                //printf("%-20s: %c%c\n","Operator", ch, buffer[i+1]);
+                printf(ORANGE "%-20s" RESET": %c%c \n", "Operator", ch, buffer[i+1]);
                 i++;
             }
             else if(buffer[i+1] == '=')   // detect  +=, -=, *=, /=, <=, >=, &=, |=
             {
-                printf("%-20s: %c%c\n","Operator", ch, buffer[i+1]);
+                //printf("%-20s: %c%c\n","Operator", ch, buffer[i+1]);
+                printf(ORANGE "%-20s"RESET": %c%c\n", "Operator", ch, buffer[i+1]);
                 i++;
             }
             else
             {
-                printf("%-20s: %c\n", "Operator", ch);
+                //printf("%-20s: %c\n", "Operator", ch);
+                printf(ORANGE "%-20s" RESET": %c \n", "Operator", ch);
             }
             continue;
         }
@@ -179,13 +183,13 @@ void lexi()
 
     //to print missing closing bracket error
     if(round != 0)
-    printf("Error: Missing closing ')'\n");
+    printf(RED "\nError: Missing closing ')'\n" RESET);
 
     if(square != 0)
-        printf("Error: Missing closing ']'\n");
+        printf(RED "\nError: Missing closing ']'\n" RESET);
 
     if(curly != 0)
-        printf("Error: Missing closing '}'\n");
+        printf(RED "\nError: Missing closing '}'\n" RESET);
         
 }
 
